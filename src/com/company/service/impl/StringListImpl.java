@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class StringListImpl implements StringList {
 
     private String[] arr;
-    int actualSize = 0;
+    private int actualSize = 0;
 
     public StringListImpl() {
         int size = 3;
@@ -40,6 +40,7 @@ public class StringListImpl implements StringList {
     @Override
     public String add(int index, String item) {
         ifNull(item);
+        ifIndexOfBoundExceptions(index);
         String temp = item;
         actualSize++;
         if (arr[index] == null) {
@@ -73,10 +74,10 @@ public class StringListImpl implements StringList {
 
     @Override
     public String remove(int index) {
+        ifIndexOfBoundExceptions(index);
         if (arr[index] == null) {
             return null;
         }
-        ifIndexOfBoundExceptions(index);
         arr[index] = null;
         return arr[index];
     }
@@ -252,7 +253,7 @@ public class StringListImpl implements StringList {
     }
 
     private int ifIndexOfBoundExceptions(int index) {
-        if (index < arr.length) {
+        if (index < arr.length && index >= 0) {
             return index;
         } else {
             throw new MyIndexOfBoundExceptions();
